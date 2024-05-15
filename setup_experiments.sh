@@ -33,7 +33,7 @@ tag=neutral
 Init
 echo "[SNOWPACK]" >> ${inifile}
 echo "ATMOSPHERIC_STABILITY = NEUTRAL" >> ${inifile}
-echo "bash plotting.sh neutral HS_mod output/MST96_default.smet output/MST96_neutral.smet" >> ${plotfile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_default.smet output/MST96_${tag}.smet" >> ${plotfile}
 
 
 #
@@ -43,4 +43,67 @@ tag=HS
 Init
 echo "[SNOWPACK]" >> ${inifile}
 echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
-echo "bash plotting.sh HS HS_mod output/MST96_default.smet output/MST96_HS.smet" >> ${plotfile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_default.smet output/MST96_${tag}.smet" >> ${plotfile}
+
+
+#
+# Set ENFORCE_MEASURED_SNOW_HEIGHTS and clear sky incoming longwave
+#
+tag=HS_CSKY
+Init
+echo "[SNOWPACK]" >> ${inifile}
+echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "[SNOWPACKADVANCED]" >> ${inifile}
+echo "THRESH_DTEMP_AIR_SNOW = 1.0" >> ${inifile}
+echo "[InputEditing]" >> ${inifile}
+echo "*::edit10		= EXCLUDE" >> ${inifile}
+echo "*::arg10::params  = ILWR" >> ${inifile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+
+
+#
+# Set ENFORCE_MEASURED_SNOW_HEIGHTS and clear sky incoming longwave and no TSS
+#
+tag=HS_CSKY_NOTSS
+Init
+echo "[SNOWPACK]" >> ${inifile}
+echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "[SNOWPACKADVANCED]" >> ${inifile}
+echo "THRESH_DTEMP_AIR_SNOW = 1.0" >> ${inifile}
+echo "[InputEditing]" >> ${inifile}
+echo "*::edit10		= EXCLUDE" >> ${inifile}
+echo "*::arg10::params  = ILWR TSS" >> ${inifile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+
+
+#
+# Set 1 hour timesteps
+#
+tag=DT1M
+Init
+echo "[SNOWPACK]" >> ${inifile}
+echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "CALCULATION_STEP_LENGTH = 1" >> ${inifile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+
+
+#
+# Set 1 hour timesteps
+#
+tag=DT1H
+Init
+echo "[SNOWPACK]" >> ${inifile}
+echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "CALCULATION_STEP_LENGTH = 60" >> ${inifile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+
+
+#
+# Set 3 hour timesteps
+#
+tag=DT3H
+Init
+echo "[SNOWPACK]" >> ${inifile}
+echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "CALCULATION_STEP_LENGTH = 180" >> ${inifile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
