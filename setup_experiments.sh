@@ -15,6 +15,8 @@ mkdir -p ./log/
 mkdir -p ./output/
 runfile="runs.lst"
 > ${runfile}
+plotfile="plots.lst"
+> ${plotfile}
 
 
 #
@@ -31,6 +33,7 @@ tag=neutral
 Init
 echo "[SNOWPACK]" >> ${inifile}
 echo "ATMOSPHERIC_STABILITY = NEUTRAL" >> ${inifile}
+echo "bash plotting.sh neutral HS_mod output/MST96_default.smet output/MST96_neutral.smet" >> ${plotfile}
 
 
 #
@@ -40,4 +43,4 @@ tag=HS
 Init
 echo "[SNOWPACK]" >> ${inifile}
 echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
-
+echo "bash plotting.sh HS HS_mod output/MST96_default.smet output/MST96_HS.smet" >> ${plotfile}
