@@ -13,4 +13,6 @@ Doing some experiments with the SNOWPACK example for WFJ (res1exp) in the SNOWPA
 3) In a bash terminal, execute `bash setup_experiments.sh`. This does the following:
    - Creates an *.ini file for each experiment
    - Adds a command to run SNOWPACK to the file `runs.lst`
+   - Adds a command to plot the simulations to the file `plots.sh`
 4) In a bash terminal, execute `bash runs.lst` to execute all the SNOWPACK simulations
+5) In a bash terminal, execute `bash plots.lst` to create all the figures
