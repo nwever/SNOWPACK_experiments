@@ -25,14 +25,14 @@ xlabels=$(grep ^[0-9] ${file_to_plot} | awk '{printf "%02d-%02d %d\n", int(subst
 
 if [ ! -z "${file_to_plot}" ]; then
 	coltoplot=$(fgrep fields ${file_to_plot} | awk -v var_to_plot="${var_to_plot}" '{for(i=3; i<=NF; i++) {if($i==var_to_plot) {print i-2; exit}}}')
-	colname=$(basename --suffix ".smet" ${file_to_plot} | cut -d "_" -f2)
+	colname=$(basename --suffix ".smet" ${file_to_plot} | cut -d "_" -f2-)
 else
 	echo "Nothing to plot."
 	exit
 fi
 if [ ! -z "${file_to_plot2}" ]; then
 	coltoplot2=$(fgrep fields ${file_to_plot2} | awk -v var_to_plot="${var_to_plot}" '{for(i=3; i<=NF; i++) {if($i==var_to_plot) {print i-2; exit}}}')
-	colname2=$(basename --suffix ".smet" ${file_to_plot2} | cut -d "_" -f2)
+	colname2=$(basename --suffix ".smet" ${file_to_plot2} | cut -d "_" -f2-)
 else
 	coltoplot2=""
 fi
