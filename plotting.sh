@@ -3,6 +3,11 @@ var_to_plot=$2
 file_to_plot=$3
 file_to_plot2=$4
 
+if [ $# -lt 3 ]; then
+	echo "Wrong number of command line parameters."
+	exit
+fi
+
 mkdir -p figures
 plotfilename="./figures/${name}"
 
@@ -48,3 +53,4 @@ if [ ! -z "${coltoplot3}" ]; then
 fi 
 echo "" >> ${plotfilename}
 gnuplot ${plotfilename}
+rm ${plotfilename}
