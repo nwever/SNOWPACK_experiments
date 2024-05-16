@@ -41,6 +41,10 @@ if [ "${var_to_plot}" = "HS_mod" ]; then
 	var_to_plot3="HS_meas"
 	coltoplot3=$(fgrep fields ${file_to_plot} | awk -v var_to_plot="${var_to_plot3}" '{for(i=3; i<=NF; i++) {if($i==var_to_plot) {print i-2; exit}}}')
 fi
+if [ "${var_to_plot}" = "TSS_mod" ]; then
+	var_to_plot3="TSS_meas"
+	coltoplot3=$(fgrep fields ${file_to_plot} | awk -v var_to_plot="${var_to_plot3}" '{for(i=3; i<=NF; i++) {if($i==var_to_plot) {print i-2; exit}}}')
+fi
 
 # Convert var_to_plot
 var_to_plot_t=$(echo ${var_to_plot} | tr '_' '-')
@@ -48,9 +52,13 @@ var_to_plot_t3=$(echo ${var_to_plot3} | tr '_' '-')
 
 echo "${xlabels}" >> ${plotfilename}
 echo "${ylabels}" >> ${plotfilename}
-echo "pl '<(grep ^[0-9] ${file_to_plot})' u ${coltoplot} w l ${linespec} lc rgb '#d1420f' title '${var_to_plot_t} (${colname})' \\" >> ${plotfilename}
+echo "pl '<(grep ^[0-9] ${file_to_plot})' u ${coltoplot} w l ${linespec} lc rgb '#0f73d1' title '${var_to_plot_t} (${colname})' \\" >> ${plotfilename}
 if [ ! -z "${coltoplot2}" ]; then
-	echo ", '<(grep ^[0-9] ${file_to_plot2})' u ${coltoplot2} w l ${linespec} lc rgb '#0f73d1' title '${var_to_plot_t} (${colname2})' \\" >> ${plotfilename}
+	if [ "${var_to_plot}" = "TSS_mod" ]; then
+		echo ", '<(grep ^[0-9] ${file_to_plot2})' u ${coltoplot2} w l ${linespec} lc rgb '#d1420f' title '${var_to_plot_t} (${colname2})' \\" >> ${plotfilename}
+	else
+		echo ", '<(grep ^[0-9] ${file_to_plot2})' u ${coltoplot2} w l ${linespec}.8 lc rgb '#d1420f' title '${var_to_plot_t} (${colname2})' \\" >> ${plotfilename}
+	fi
 fi 
 if [ ! -z "${coltoplot3}" ]; then
 	echo ", '<(grep ^[0-9] ${file_to_plot})' u ${coltoplot3} w l ${linespec} lc rgb 'black' title '${var_to_plot_t3}' \\" >> ${plotfilename}
