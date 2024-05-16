@@ -15,4 +15,6 @@ Doing some experiments with the SNOWPACK example for WFJ (res1exp) in the SNOWPA
    - Adds a command to run SNOWPACK to the file `runs.lst`
    - Adds a command to plot the simulations to the file `plots.sh`
 4) In a bash terminal, execute `bash runs.lst` to execute all the SNOWPACK simulations
-5) In a bash terminal, execute `bash plots.lst` to create all the figures
+5) In a bash terminal, execute `bash plots.lst` to create all the figures in pdf
+6) To create png images, go to the `./figures/` folder and do:
+   `for f in *pdf; do g=$(basename --suffix ".pdf" ${f}); convert -density 200 -flatten ${f} ${g}.png; done`
