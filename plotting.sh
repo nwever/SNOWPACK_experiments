@@ -48,12 +48,12 @@ var_to_plot_t3=$(echo ${var_to_plot3} | tr '_' '-')
 
 echo "${xlabels}" >> ${plotfilename}
 echo "${ylabels}" >> ${plotfilename}
-echo "pl '<(grep ^[0-9] ${file_to_plot})' u ${coltoplot} w l ${linespec} lc rgb 'black' title '${var_to_plot_t} (${colname})' \\" >> ${plotfilename}
+echo "pl '<(grep ^[0-9] ${file_to_plot})' u ${coltoplot} w l ${linespec} lc rgb '#d1420f' title '${var_to_plot_t} (${colname})' \\" >> ${plotfilename}
 if [ ! -z "${coltoplot2}" ]; then
-	echo ", '<(grep ^[0-9] ${file_to_plot2})' u ${coltoplot2} w l ${linespec} lc rgb 'blue' title '${var_to_plot_t} (${colname2})' \\" >> ${plotfilename}
+	echo ", '<(grep ^[0-9] ${file_to_plot2})' u ${coltoplot2} w l ${linespec} lc rgb '#0f73d1' title '${var_to_plot_t} (${colname2})' \\" >> ${plotfilename}
 fi 
 if [ ! -z "${coltoplot3}" ]; then
-	echo ", '<(grep ^[0-9] ${file_to_plot})' u ${coltoplot3} w l ${linespec} lc rgb 'red' title '${var_to_plot_t3}' \\" >> ${plotfilename}
+	echo ", '<(grep ^[0-9] ${file_to_plot})' u ${coltoplot3} w l ${linespec} lc rgb 'black' title '${var_to_plot_t3}' \\" >> ${plotfilename}
 fi 
 echo "" >> ${plotfilename}
 gnuplot ${plotfilename}
