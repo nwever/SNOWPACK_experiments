@@ -24,6 +24,7 @@ plotfile="plots.lst"
 #
 tag=default
 Init
+echo "bash plotting.sh ${tag} HS_mod output/MST96_default.smet output/MST96_default.smet" >> ${plotfile}
 
 
 #
@@ -34,6 +35,59 @@ Init
 echo "[SNOWPACK]" >> ${inifile}
 echo "ATMOSPHERIC_STABILITY = NEUTRAL" >> ${inifile}
 echo "bash plotting.sh ${tag} HS_mod output/MST96_default.smet output/MST96_${tag}.smet" >> ${plotfile}
+echo "bash plotting_spring.sh ${tag}_spring HS_mod output/MST96_default.smet output/MST96_${tag}.smet" >> ${plotfile}
+
+
+#
+# Set ENFORCE_MEASURED_SNOW_HEIGHTS and NEUTRAL atmospheric stability
+#
+tag=HS_neutral
+Init
+echo "[SNOWPACK]" >> ${inifile}
+echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "ATMOSPHERIC_STABILITY = NEUTRAL" >> ${inifile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+echo "bash plotting_spring.sh ${tag}_spring HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+
+
+#
+# Set MO_MICHLMAYR atmospheric stability
+#
+tag=HS_mo_michlmayr
+Init
+echo "[SNOWPACK]" >> ${inifile}
+echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "ATMOSPHERIC_STABILITY = MO_MICHLMAYR" >> ${inifile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+echo "bash plotting_spring.sh ${tag}_spring HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+
+
+#
+# Set roughness length
+#
+tag=HS_Z0_0.07
+Init
+echo "[SNOWPACK]" >> ${inifile}
+echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "ROUGHNESS_LENGTH = 0.07" >> ${inifile}
+echo "bash plotting.sh ${tag} HS_mod output/MST96_default.smet output/MST96_${tag}.smet" >> ${plotfile}
+echo "bash plotting_spring.sh ${tag}_spring HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+
+
+#
+# Set conditions for "Nachschneien": spurious snowfalls during ablation because of overestimated melt
+#
+tag=HS_Nachschneien
+Init
+echo "[SNOWPACK]" >> ${inifile}
+echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "ATMOSPHERIC_STABILITY = NEUTRAL" >> ${inifile}
+echo "[SNOWPACKADVANCED]" >> ${inifile}
+echo "THRESH_RAIN = 10" >> ${inifile}
+echo "THRESH_DTEMP_AIR_SNOW = 8.0" >> ${inifile}
+echo "[INPUT]" >> ${inifile}
+echo "PSUM_PH::PRECSPLITTING::SNOW = 284.35" >> ${inifile}
+echo "bash plotting_spring.sh ${tag}_spring HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
 
 
 #
@@ -44,6 +98,8 @@ Init
 echo "[SNOWPACK]" >> ${inifile}
 echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
 echo "bash plotting.sh ${tag} HS_mod output/MST96_default.smet output/MST96_${tag}.smet" >> ${plotfile}
+echo "bash plotting.sh ${tag}_dflt HS_mod output/MST96_${tag}.smet output/MST96_${tag}.smet" >> ${plotfile}
+echo "bash plotting_spring.sh ${tag}_dflt_spring HS_mod output/MST96_${tag}.smet output/MST96_${tag}.smet" >> ${plotfile}
 
 
 #
@@ -53,12 +109,17 @@ tag=HS_CSKY
 Init
 echo "[SNOWPACK]" >> ${inifile}
 echo "ENFORCE_MEASURED_SNOW_HEIGHTS = TRUE" >> ${inifile}
+echo "CHANGE_BC = false" >> ${inifile}
 echo "[SNOWPACKADVANCED]" >> ${inifile}
-echo "THRESH_DTEMP_AIR_SNOW = 1.0" >> ${inifile}
+echo "THRESH_DTEMP_AIR_SNOW = 3.0" >> ${inifile}
 echo "[InputEditing]" >> ${inifile}
 echo "*::edit10		= EXCLUDE" >> ${inifile}
 echo "*::arg10::params  = ILWR" >> ${inifile}
+echo "[Generators]" >> ${inifile}
+echo "ILWR::generator1 = clearsky_LW" >> ${inifile}
+echo "ILWR::arg1::type = Dilley" >> ${inifile}
 echo "bash plotting.sh ${tag} HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
+echo "bash plotting_spring.sh ${tag}_spring HS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
 echo "bash plotting.sh ${tag}_tss TSS_mod output/MST96_HS.smet output/MST96_${tag}.smet" >> ${plotfile}
 
 
